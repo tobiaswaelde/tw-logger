@@ -2,6 +2,10 @@
 	"name": "tw-logger",
 	"version": "1.0.2",
 	"description": "Custom winston logger for express",
+	"repository": {
+		"type": "git",
+		"url": "git@gitlab.com:tw-custom-modules/tw-logger.git"
+	},
 	"main": "./dist/logger.js",
 	"scripts": {
 		"build": "tsc --declaration && cp ./dist/logger.d.ts ./index.d.ts"
