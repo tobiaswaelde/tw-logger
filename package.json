@@ -2,9 +2,9 @@
 	"name": "tw-logger",
 	"version": "1.0.1",
 	"description": "Custom winston logger for express",
-	"main": "index.js",
+	"main": "./dist/logger.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "tsc --declaration && cp ./dist/logger.d.ts ./index.d.ts"
 	},
 	"keywords": [
 		"Logger",
