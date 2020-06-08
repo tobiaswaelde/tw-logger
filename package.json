@@ -1,0 +1,24 @@
+{
+	"name": "tw-logger",
+	"version": "1.0.1",
+	"description": "Custom winston logger for express",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"Logger",
+		"Express",
+		"Winston"
+	],
+	"author": {
+		"email": "tobias.waelde@gmail.com",
+		"name": "Tobias Wälde",
+		"url": "https://tobiaswaelde.com"
+	},
+	"license": "ISC",
+	"dependencies": {
+		"@types/node": "^14.0.11",
+		"winston": "^3.2.1"
+	}
+}
