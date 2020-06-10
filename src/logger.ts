@@ -1,6 +1,7 @@
 import winston, { format } from 'winston';
 import { logLevels } from './logger/log-levels';
 import { formatWithTimestamp } from './logger/format-with-timestamp';
+import { ConsoleColors } from './util/console-colors';
 
 interface Logger extends winston.Logger {
 	db: winston.LeveledLogMethod;
@@ -51,3 +52,4 @@ if (NODE_ENV !== 'production') {
 }
 
 export default logger;
+export { ConsoleColors };
