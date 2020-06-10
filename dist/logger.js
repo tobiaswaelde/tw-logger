@@ -10,6 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importStar(require("winston"));
 const log_levels_1 = require("./logger/log-levels");
 const format_with_timestamp_1 = require("./logger/format-with-timestamp");
+const console_colors_1 = require("./util/console-colors");
+exports.ConsoleColors = console_colors_1.ConsoleColors;
 const logger = winston_1.default.createLogger({
     level: 'silly',
     levels: log_levels_1.logLevels.levels,
