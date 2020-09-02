@@ -6,18 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
-const log_symbols_1 = __importDefault(require("log-symbols"));
+const isSupported = process.platform !== 'win32' || process.env.CI || process.env.TERM === 'xterm-256color';
 exports.formatWithIcons = winston_1.format.printf((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
     if (level.includes('error'))
-        symbol = log_symbols_1.default.error;
+        symbol = isSupported ? '✖  ' : '✗';
     if (level.includes('warn'))
-        symbol = log_symbols_1.default.warning;
+        symbol = isSupported ? '⚠' : '⚠';
     if (level.includes('info'))
-        symbol = log_symbols_1.default.info;
+        symbol = isSupported ? 'ℹ' : 'ℹ';
     if (level.includes('success'))
-        symbol = log_symbols_1.default.success;
+        symbol = isSupported ? '✔' : '✓';
     const stringifiedRest = fast_safe_stringify_1.default(Object.assign({}, info, {
         level: undefined,
         message: undefined,
@@ -26,10 +26,10 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
     let _info = '';
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
-        _info = `${info.level}:${padding} ${symbol}${info.message} ${stringifiedRest}`;
+        _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
     }
     else {
-        _info = `${info.level}:${padding} ${symbol}${info.message}`;
+        _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
     }
     return _info;
 });
