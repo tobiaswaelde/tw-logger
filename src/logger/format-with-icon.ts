@@ -3,7 +3,7 @@ import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 import { MESSAGE } from 'triple-beam';
 
-export const formatWithIcons = format.printf((info: any) => {
+export const formatWithIcons = format((info: any) => {
 	const level = info.level.trim().toLowerCase();
 	let symbol = '';
 	// if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';

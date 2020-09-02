@@ -1,1 +1,1 @@
-export declare const formatWithIcons: import("logform").Format;
+export declare const formatWithIcons: import("logform").FormatWrap;

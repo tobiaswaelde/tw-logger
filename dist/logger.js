@@ -48,14 +48,16 @@ logger.add(new winston_1.default.transports.File({
 if (NODE_ENV !== 'production') {
     // log to console
     logger.add(new winston_1.default.transports.Console({
-        format: winston_1.format.combine(format_with_icon_1.formatWithIcons, winston_1.format.cli({
+        format: winston_1.format.combine(
+        // formatWithIcons,
+        winston_1.format.cli({
             levels: log_levels_1.logLevels.levels,
             colors: log_levels_1.logLevels.colors,
             level: true,
             message: true,
         }), 
         // format.simple()
-        format_with_icon_1.formatWithIcons),
+        format_with_icon_1.formatWithIcons()),
     }));
 }
 exports.default = logger;

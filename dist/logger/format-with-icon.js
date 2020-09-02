@@ -8,7 +8,7 @@ const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
 const triple_beam_1 = require("triple-beam");
-exports.formatWithIcons = winston_1.format.printf((info) => {
+exports.formatWithIcons = winston_1.format((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
     // if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';

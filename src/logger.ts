@@ -41,7 +41,7 @@ if (NODE_ENV !== 'production') {
 	logger.add(
 		new winston.transports.Console({
 			format: format.combine(
-				formatWithIcons,
+				// formatWithIcons,
 				format.cli({
 					levels: logLevels.levels,
 					colors: logLevels.colors,
@@ -49,7 +49,7 @@ if (NODE_ENV !== 'production') {
 					message: true,
 				}),
 				// format.simple()
-				formatWithIcons
+				formatWithIcons()
 			),
 		})
 	);
