@@ -6,7 +6,7 @@ import { logLevels } from './log-levels';
 
 function paddingForLevel(level: string): string {
 	const lvls = Object.keys(logLevels.levels).map((level) => level.length);
-	const max = Math.max(...lvls);
+	const max = Math.max(...lvls) || 10;
 
 	const targetLen = max + 1 - level.length;
 	const padding = ` ${' '.repeat(targetLen)}`;

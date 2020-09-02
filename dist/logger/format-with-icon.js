@@ -10,7 +10,7 @@ const triple_beam_1 = require("triple-beam");
 const log_levels_1 = require("./log-levels");
 function paddingForLevel(level) {
     const lvls = Object.keys(log_levels_1.logLevels.levels).map((level) => level.length);
-    const max = Math.max(...lvls);
+    const max = Math.max(...lvls) || 10;
     const targetLen = max + 1 - level.length;
     const padding = ` ${' '.repeat(targetLen)}`;
     return padding.slice(0, targetLen);
