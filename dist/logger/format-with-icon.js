@@ -11,7 +11,7 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = log_symbols_1.default.info;
     // if (info.level == 'error') symbol = logSymbols.error;
-    if (level == 'error')
+    if (level.includes('error'))
         symbol = '✗';
     if (level == 'warn')
         symbol = log_symbols_1.default.warning;
@@ -27,10 +27,10 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
     let _info = '';
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
-        _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
+        _info = `${info.level}:${symbol}${padding} ${info.message} ${stringifiedRest}`;
     }
     else {
-        _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
+        _info = `${info.level}:${symbol}${padding} ${info.message}`;
     }
     return _info;
 });
