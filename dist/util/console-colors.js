@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConsoleColors = void 0;
 var ConsoleColors;
 (function (ConsoleColors) {
     ConsoleColors["Reset"] = "\u001B[0m";

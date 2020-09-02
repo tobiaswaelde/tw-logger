@@ -2,9 +2,11 @@ import winston, { format } from 'winston';
 import { logLevels } from './logger/log-levels';
 import { formatWithTimestamp } from './logger/format-with-timestamp';
 import { ConsoleColors } from './util/console-colors';
+import { formatWithIcons } from './logger/format-with-icon';
 
 interface Logger extends winston.Logger {
 	db: winston.LeveledLogMethod;
+	success: winston.LeveledLogMethod;
 }
 
 const logger = winston.createLogger({
@@ -39,13 +41,15 @@ if (NODE_ENV !== 'production') {
 	logger.add(
 		new winston.transports.Console({
 			format: format.combine(
+				formatWithIcons,
 				format.cli({
 					levels: logLevels.levels,
 					colors: logLevels.colors,
 					level: true,
 					message: true,
 				}),
-				format.simple()
+				// format.simple()
+				formatWithIcons
 			),
 		})
 	);

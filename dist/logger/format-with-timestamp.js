@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.formatWithTimestamp = void 0;
 const winston_1 = require("winston");
 /**
  * Cutom formatter
