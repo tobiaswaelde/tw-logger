@@ -41,7 +41,7 @@ exports.formatWithIcons = winston_1.format((info) => {
     }));
     const message = `${symbol}${info.message}`;
     // const padding = (info.padding && info.padding[info.level]) || '';
-    const padding = paddingForLevel(level, ' ', maxLength);
+    const padding = paddingForLevel(level.toString(), ' ', maxLength);
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
         info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;

@@ -18,7 +18,7 @@ function paddingForLevel(level: string, filler: string, maxLength: number): stri
 }
 
 export const formatWithIcons = format((info: any) => {
-	const level = info.level.trim().toLowerCase();
+	const level: string = info.level.trim().toLowerCase();
 	let symbol = '';
 	if (level.includes('error')) 'e';
 	// if (level.includes('error')) symbol = logSymbols.error;
@@ -39,7 +39,7 @@ export const formatWithIcons = format((info: any) => {
 
 	const message = `${symbol}${info.message}`;
 	// const padding = (info.padding && info.padding[info.level]) || '';
-	const padding = paddingForLevel(level, ' ', maxLength);
+	const padding = paddingForLevel(level.toString(), ' ', maxLength);
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
 		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
