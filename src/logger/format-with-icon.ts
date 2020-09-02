@@ -6,14 +6,14 @@ import { MESSAGE } from 'triple-beam';
 export const formatWithIcons = format((info: any) => {
 	const level = info.level.trim().toLowerCase();
 	let symbol = '';
-	// if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';
-	if (level.includes('error')) symbol = logSymbols.error;
-	// if (level.includes('warn')) symbol = isSupported ? '⚠' : '⚠';
-	if (level.includes('warn')) symbol = logSymbols.warning;
-	// if (level.includes('info')) symbol = isSupported ? 'ℹ' : 'ℹ';
-	if (level.includes('info')) symbol = logSymbols.info;
-	// if (level.includes('success')) symbol = isSupported ? '✔' : '✓';
-	if (level.includes('success')) symbol = logSymbols.success;
+	if (level.includes('error')) 'e';
+	// if (level.includes('error')) symbol = logSymbols.error;
+	if (level.includes('warn')) 'w';
+	// if (level.includes('warn')) symbol = logSymbols.warning;
+	if (level.includes('info')) 'i';
+	// if (level.includes('info')) symbol = logSymbols.info;
+	if (level.includes('success')) 's';
+	// if (level.includes('success')) symbol = logSymbols.success;
 
 	const stringifiedRest = jsonStringify(
 		Object.assign({}, info, {

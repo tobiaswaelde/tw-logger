@@ -6,23 +6,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
-const log_symbols_1 = __importDefault(require("log-symbols"));
 const triple_beam_1 = require("triple-beam");
 exports.formatWithIcons = winston_1.format((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
-    // if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';
     if (level.includes('error'))
-        symbol = log_symbols_1.default.error;
-    // if (level.includes('warn')) symbol = isSupported ? '⚠' : '⚠';
+        'e';
+    // if (level.includes('error')) symbol = logSymbols.error;
     if (level.includes('warn'))
-        symbol = log_symbols_1.default.warning;
-    // if (level.includes('info')) symbol = isSupported ? 'ℹ' : 'ℹ';
+        'w';
+    // if (level.includes('warn')) symbol = logSymbols.warning;
     if (level.includes('info'))
-        symbol = log_symbols_1.default.info;
-    // if (level.includes('success')) symbol = isSupported ? '✔' : '✓';
+        'i';
+    // if (level.includes('info')) symbol = logSymbols.info;
     if (level.includes('success'))
-        symbol = log_symbols_1.default.success;
+        's';
+    // if (level.includes('success')) symbol = logSymbols.success;
     const stringifiedRest = fast_safe_stringify_1.default(Object.assign({}, info, {
         level: undefined,
         message: undefined,
