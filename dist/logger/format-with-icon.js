@@ -9,14 +9,15 @@ const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
 exports.formatWithIcons = winston_1.format.printf((info) => {
     let symbol = '';
+    // if (info.level == 'error') symbol = logSymbols.error;
     if (info.level == 'error')
-        symbol = log_symbols_1.default.error;
+        symbol = '✗';
     if (info.level == 'warn')
         symbol = log_symbols_1.default.warning;
     if (info.level == 'info')
         symbol = log_symbols_1.default.info;
     if (info.level == 'success')
-        symbol = log_symbols_1.default.success;
+        symbol = '✓';
     const stringifiedRest = fast_safe_stringify_1.default(Object.assign({}, info, {
         level: undefined,
         message: undefined,

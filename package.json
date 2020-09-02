@@ -9,7 +9,7 @@
 	},
 	"main": "./dist/logger.js",
 	"scripts": {
-		"build": "tsc --declaration && cp ./dist/logger.d.ts ./index.d.ts"
+		"build": "rm -rf ./dist/ && rm -rf ./index.d.ts && tsc --declaration && cp ./dist/logger.d.ts ./index.d.ts"
 	},
 	"keywords": [
 		"Logger",

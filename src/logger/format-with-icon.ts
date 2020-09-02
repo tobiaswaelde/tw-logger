@@ -4,10 +4,11 @@ import logSymbols from 'log-symbols';
 
 export const formatWithIcons = format.printf((info) => {
 	let symbol = '';
-	if (info.level == 'error') symbol = logSymbols.error;
+	// if (info.level == 'error') symbol = logSymbols.error;
+	if (info.level == 'error') symbol = '✗';
 	if (info.level == 'warn') symbol = logSymbols.warning;
 	if (info.level == 'info') symbol = logSymbols.info;
-	if (info.level == 'success') symbol = logSymbols.success;
+	if (info.level == 'success') symbol = '✓';
 
 	const stringifiedRest = jsonStringify(
 		Object.assign({}, info, {
