@@ -2,6 +2,20 @@ import { format } from 'winston';
 import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 import { MESSAGE } from 'triple-beam';
+import { logLevels } from './log-levels';
+
+function getLongestLevel(): number {
+	const lvls = Object.keys(logLevels).map((level) => level.length);
+	return Math.max(...lvls);
+}
+const maxLength = getLongestLevel();
+
+function paddingForLevel(level: string, filler: string, maxLength: number): string {
+	const targetLen = maxLength + 1 - level.length;
+	const rep = Math.floor(targetLen / filler.length);
+	const padding = `${filler}${filler.repeat(rep)}`;
+	return padding.slice(0, targetLen);
+}
 
 export const formatWithIcons = format((info: any) => {
 	const level = info.level.trim().toLowerCase();
@@ -24,13 +38,14 @@ export const formatWithIcons = format((info: any) => {
 	);
 
 	const message = `${symbol}${info.message}`;
-	const padding = (info.padding && info.padding[info.level]) || '';
+	// const padding = (info.padding && info.padding[info.level]) || '';
+	const padding = paddingForLevel(level, '', maxLength);
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
 		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
 	} else {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-		info[MESSAGE] = `${info.level}: ${message}`;
+		info[MESSAGE] = `${info.level}:${padding} ${message}`;
 	}
 
 	return info;
