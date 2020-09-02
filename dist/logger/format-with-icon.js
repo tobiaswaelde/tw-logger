@@ -7,6 +7,7 @@ exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
+const triple_beam_1 = require("triple-beam");
 exports.formatWithIcons = winston_1.format.printf((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
@@ -27,16 +28,15 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
         message: undefined,
         splat: undefined,
     }));
-    let _info = info;
     const message = `${symbol}  ${info.message}`;
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
-        _info.message = `${info.level}:${padding} ${message} ${stringifiedRest}`;
+        info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
     }
     else {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-        _info.message = `${info.level}:${padding.length} ${message}`;
+        info[triple_beam_1.MESSAGE] = `${info.level}:${padding.length} ${message}`;
     }
-    return _info;
+    return info;
 });

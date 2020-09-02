@@ -1,6 +1,7 @@
 import { format } from 'winston';
 import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
+import { MESSAGE } from 'triple-beam';
 
 export const formatWithIcons = format.printf((info: any) => {
 	const level = info.level.trim().toLowerCase();
@@ -22,16 +23,15 @@ export const formatWithIcons = format.printf((info: any) => {
 		})
 	);
 
-	let _info = info;
 	const message = `${symbol}  ${info.message}`;
 	const padding = (info.padding && info.padding[info.level]) || '';
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
-		_info.message = `${info.level}:${padding} ${message} ${stringifiedRest}`;
+		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
 	} else {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-		_info.message = `${info.level}:${(padding as string).length} ${message}`;
+		info[MESSAGE] = `${info.level}:${(padding as string).length} ${message}`;
 	}
 
-	return _info;
+	return info;
 });
