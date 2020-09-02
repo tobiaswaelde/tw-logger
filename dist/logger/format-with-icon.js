@@ -26,10 +26,10 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
     let _info = '';
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
-        _info = `${info.level}:${padding}  ${symbol} ${info.message} ${stringifiedRest}`;
+        _info = `${info.level}:${padding} ${symbol}${info.message} ${stringifiedRest}`;
     }
     else {
-        _info = `${info.level}:${padding}  ${symbol} ${info.message}`;
+        _info = `${info.level}:${padding} ${symbol}${info.message}`;
     }
     return _info;
 });
