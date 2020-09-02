@@ -3,12 +3,13 @@ import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 
 export const formatWithIcons = format.printf((info) => {
-	let symbol = 'NONE';
+	const level = info.level.trim().toLowerCase();
+	let symbol = logSymbols.info;
 	// if (info.level == 'error') symbol = logSymbols.error;
-	if (info.level == 'error') symbol = '✗';
-	if (info.level == 'warn') symbol = logSymbols.warning;
-	if (info.level == 'info') symbol = logSymbols.info;
-	if (info.level == 'success') symbol = '✓';
+	if (level == 'error') symbol = '✗';
+	if (level == 'warn') symbol = logSymbols.warning;
+	if (level == 'info') symbol = logSymbols.info;
+	if (level == 'success') symbol = '✓';
 
 	const stringifiedRest = jsonStringify(
 		Object.assign({}, info, {
