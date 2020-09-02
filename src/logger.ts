@@ -3,6 +3,7 @@ import { logLevels } from './logger/log-levels';
 import { formatWithTimestamp } from './logger/format-with-timestamp';
 import { ConsoleColors } from './util/console-colors';
 import { formatWithIcons } from './logger/format-with-icon';
+import symbols from 'log-symbols';
 
 interface Logger extends winston.Logger {
 	db: winston.LeveledLogMethod;
@@ -56,4 +57,4 @@ if (NODE_ENV !== 'production') {
 }
 
 export default logger;
-export { ConsoleColors };
+export { ConsoleColors, symbols };
