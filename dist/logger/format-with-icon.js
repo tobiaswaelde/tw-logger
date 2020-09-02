@@ -7,7 +7,6 @@ exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
-const isSupported = process.platform !== 'win32' || process.env.CI || process.env.TERM === 'xterm-256color';
 exports.formatWithIcons = winston_1.format.printf((info) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
@@ -28,16 +27,16 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
         message: undefined,
         splat: undefined,
     }));
-    let _info = '';
+    let _info = info;
     const message = `${symbol}  ${info.message}`;
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
-        _info = `${info.level}:${padding} ${message} ${stringifiedRest}`;
+        _info.message = `${info.level}:${padding} ${message} ${stringifiedRest}`;
     }
     else {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-        _info = `${info.level}:${padding.length} ${message}`;
+        _info.message = `${info.level}:${padding.length} ${message}`;
     }
     return _info;
 });

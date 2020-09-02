@@ -2,10 +2,7 @@ import { format } from 'winston';
 import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 
-const isSupported =
-	process.platform !== 'win32' || process.env.CI || process.env.TERM === 'xterm-256color';
-
-export const formatWithIcons = format.printf((info) => {
+export const formatWithIcons = format.printf((info: any) => {
 	const level = info.level.trim().toLowerCase();
 	let symbol = '';
 	// if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';
@@ -25,15 +22,15 @@ export const formatWithIcons = format.printf((info) => {
 		})
 	);
 
-	let _info = '';
+	let _info = info;
 	const message = `${symbol}  ${info.message}`;
 	const padding = (info.padding && info.padding[info.level]) || '';
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
-		_info = `${info.level}:${padding} ${message} ${stringifiedRest}`;
+		_info.message = `${info.level}:${padding} ${message} ${stringifiedRest}`;
 	} else {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-		_info = `${info.level}:${(padding as string).length} ${message}`;
+		_info.message = `${info.level}:${(padding as string).length} ${message}`;
 	}
 
 	return _info;
