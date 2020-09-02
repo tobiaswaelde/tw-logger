@@ -9,16 +9,15 @@ const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
 exports.formatWithIcons = winston_1.format.printf((info) => {
     const level = info.level.trim().toLowerCase();
-    let symbol = log_symbols_1.default.info;
-    // if (info.level == 'error') symbol = logSymbols.error;
+    let symbol = '';
     if (level.includes('error'))
-        symbol = '✗';
-    if (level == 'warn')
+        symbol = log_symbols_1.default.error;
+    if (level.includes('warn'))
         symbol = log_symbols_1.default.warning;
-    if (level == 'info')
+    if (level.includes('info'))
         symbol = log_symbols_1.default.info;
-    if (level == 'success')
-        symbol = '✓';
+    if (level.includes('success'))
+        symbol = log_symbols_1.default.success;
     const stringifiedRest = fast_safe_stringify_1.default(Object.assign({}, info, {
         level: undefined,
         message: undefined,
@@ -27,10 +26,10 @@ exports.formatWithIcons = winston_1.format.printf((info) => {
     let _info = '';
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
-        _info = `${info.level}:${symbol}${padding} ${info.message} ${stringifiedRest}`;
+        _info = `${info.level}:${padding}${symbol}  ${info.message} ${stringifiedRest}`;
     }
     else {
-        _info = `${info.level}:${symbol}${padding} ${info.message}`;
+        _info = `${info.level}:${padding}${symbol}  ${info.message}`;
     }
     return _info;
 });
