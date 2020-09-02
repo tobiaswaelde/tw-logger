@@ -1,6 +1,6 @@
 {
 	"name": "tw-logger",
-	"version": "1.1.16",
+	"version": "1.1.17",
 	"description": "Custom winston logger for express",
 	"repository": {
 		"type": "git",
