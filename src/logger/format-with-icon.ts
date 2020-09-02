@@ -8,10 +8,14 @@ const isSupported =
 export const formatWithIcons = format.printf((info) => {
 	const level = info.level.trim().toLowerCase();
 	let symbol = '';
-	if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';
-	if (level.includes('warn')) symbol = isSupported ? '⚠' : '⚠';
-	if (level.includes('info')) symbol = isSupported ? 'ℹ' : 'ℹ';
-	if (level.includes('success')) symbol = isSupported ? '✔' : '✓';
+	// if (level.includes('error')) symbol = isSupported ? '✖  ' : '✗';
+	if (level.includes('error')) symbol = logSymbols.error;
+	// if (level.includes('warn')) symbol = isSupported ? '⚠' : '⚠';
+	if (level.includes('warn')) symbol = logSymbols.warning;
+	// if (level.includes('info')) symbol = isSupported ? 'ℹ' : 'ℹ';
+	if (level.includes('info')) symbol = logSymbols.info;
+	// if (level.includes('success')) symbol = isSupported ? '✔' : '✓';
+	if (level.includes('success')) symbol = logSymbols.success;
 
 	const stringifiedRest = jsonStringify(
 		Object.assign({}, info, {
@@ -29,7 +33,7 @@ export const formatWithIcons = format.printf((info) => {
 		_info = `${info.level}:${padding} ${message} ${stringifiedRest}`;
 	} else {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-		_info = `${info.level}:${padding} ${message}`;
+		_info = `${info.level}:${(padding as string).length} ${message}`;
 	}
 
 	return _info;
