@@ -7,13 +7,9 @@ exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const triple_beam_1 = require("triple-beam");
-const log_levels_1 = require("./log-levels");
-function paddingForLevel(level) {
-    const lvls = Object.keys(log_levels_1.logLevels.levels).map((level) => level.length);
-    const max = Math.max(...lvls) || 10;
-    const targetLen = max + 1 - level.length;
-    const padding = ` ${' '.repeat(targetLen)}`;
-    return padding.slice(0, targetLen);
+function paddingForLevel() {
+    const padding = ` ${' '.repeat(10)}`;
+    return padding.slice(0, 10);
 }
 exports.formatWithIcons = winston_1.format((info, opts) => {
     const level = info.level.trim().toLowerCase();
@@ -37,7 +33,7 @@ exports.formatWithIcons = winston_1.format((info, opts) => {
     }));
     const message = `${symbol}${info.message}`;
     // const padding = (info.padding && info.padding[info.level]) || '';
-    const padding = paddingForLevel(level);
+    const padding = paddingForLevel();
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
         info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
