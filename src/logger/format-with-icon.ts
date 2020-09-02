@@ -30,7 +30,7 @@ export const formatWithIcons = format((info: any) => {
 		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
 	} else {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-		info[MESSAGE] = `${info.level}:${padding} ${message}`;
+		info[MESSAGE] = `${info.level}: ${message}`;
 	}
 
 	return info;

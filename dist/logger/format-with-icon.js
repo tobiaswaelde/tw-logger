@@ -35,7 +35,7 @@ exports.formatWithIcons = winston_1.format((info) => {
     }
     else {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message}`;
-        info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message}`;
+        info[triple_beam_1.MESSAGE] = `${info.level}: ${message}`;
     }
     return info;
 });
