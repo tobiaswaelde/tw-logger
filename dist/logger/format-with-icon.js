@@ -28,7 +28,7 @@ exports.formatWithIcons = winston_1.format((info) => {
         message: undefined,
         splat: undefined,
     }));
-    const message = `${symbol}  ${info.message}`;
+    const message = `${symbol}${info.message}`;
     const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
