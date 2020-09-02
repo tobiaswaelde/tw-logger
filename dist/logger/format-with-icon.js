@@ -8,15 +8,11 @@ const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const triple_beam_1 = require("triple-beam");
 const log_levels_1 = require("./log-levels");
-function getLongestLevel() {
+function paddingForLevel(level) {
     const lvls = Object.keys(log_levels_1.logLevels).map((level) => level.length);
-    return Math.max(...lvls);
-}
-const maxLength = getLongestLevel();
-function paddingForLevel(level, filler, maxLength) {
-    const targetLen = maxLength + 1 - level.length;
-    const rep = Math.floor(targetLen / filler.length);
-    const padding = `${filler}${filler.repeat(rep)}`;
+    const max = Math.max(...lvls);
+    const targetLen = max + 1 - level.length;
+    const padding = ` ${' '.repeat(targetLen)}`;
     return padding.slice(0, targetLen);
 }
 exports.formatWithIcons = winston_1.format((info) => {
@@ -41,7 +37,7 @@ exports.formatWithIcons = winston_1.format((info) => {
     }));
     const message = `${symbol}${info.message}`;
     // const padding = (info.padding && info.padding[info.level]) || '';
-    const padding = paddingForLevel(level.toString(), ' ', maxLength);
+    const padding = paddingForLevel(level);
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
         info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;

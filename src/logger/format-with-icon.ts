@@ -4,16 +4,13 @@ import logSymbols from 'log-symbols';
 import { MESSAGE } from 'triple-beam';
 import { logLevels } from './log-levels';
 
-function getLongestLevel(): number {
+function paddingForLevel(level: string): string {
 	const lvls = Object.keys(logLevels).map((level) => level.length);
-	return Math.max(...lvls);
-}
-const maxLength = getLongestLevel();
+	const max = Math.max(...lvls);
 
-function paddingForLevel(level: string, filler: string, maxLength: number): string {
-	const targetLen = maxLength + 1 - level.length;
-	const rep = Math.floor(targetLen / filler.length);
-	const padding = `${filler}${filler.repeat(rep)}`;
+	const targetLen = max + 1 - level.length;
+	const padding = ` ${' '.repeat(targetLen)}`;
+
 	return padding.slice(0, targetLen);
 }
 
@@ -39,7 +36,7 @@ export const formatWithIcons = format((info: any) => {
 
 	const message = `${symbol}${info.message}`;
 	// const padding = (info.padding && info.padding[info.level]) || '';
-	const padding = paddingForLevel(level.toString(), ' ', maxLength);
+	const padding = paddingForLevel(level);
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
 		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;
