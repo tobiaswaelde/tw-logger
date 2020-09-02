@@ -8,7 +8,7 @@ const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const log_symbols_1 = __importDefault(require("log-symbols"));
 exports.formatWithIcons = winston_1.format.printf((info) => {
-    let symbol = '';
+    let symbol = 'NONE';
     // if (info.level == 'error') symbol = logSymbols.error;
     if (info.level == 'error')
         symbol = '✗';

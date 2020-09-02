@@ -3,7 +3,7 @@ import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 
 export const formatWithIcons = format.printf((info) => {
-	let symbol = '';
+	let symbol = 'NONE';
 	// if (info.level == 'error') symbol = logSymbols.error;
 	if (info.level == 'error') symbol = '✗';
 	if (info.level == 'warn') symbol = logSymbols.warning;
