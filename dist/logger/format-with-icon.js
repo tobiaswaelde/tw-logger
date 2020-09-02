@@ -7,10 +7,6 @@ exports.formatWithIcons = void 0;
 const winston_1 = require("winston");
 const fast_safe_stringify_1 = __importDefault(require("fast-safe-stringify"));
 const triple_beam_1 = require("triple-beam");
-function paddingForLevel() {
-    const padding = ` ${' '.repeat(10)}`;
-    return padding.slice(0, 10);
-}
 exports.formatWithIcons = winston_1.format((info, opts) => {
     const level = info.level.trim().toLowerCase();
     let symbol = '';
@@ -32,8 +28,7 @@ exports.formatWithIcons = winston_1.format((info, opts) => {
         splat: undefined,
     }));
     const message = `${symbol}${info.message}`;
-    // const padding = (info.padding && info.padding[info.level]) || '';
-    const padding = paddingForLevel();
+    const padding = (info.padding && info.padding[info.level]) || '';
     if (stringifiedRest !== '{}') {
         // _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
         info[triple_beam_1.MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;

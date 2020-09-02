@@ -2,13 +2,6 @@ import { format } from 'winston';
 import jsonStringify from 'fast-safe-stringify';
 import logSymbols from 'log-symbols';
 import { MESSAGE } from 'triple-beam';
-import { logLevels } from './log-levels';
-
-function paddingForLevel(): string {
-	const padding = ` ${' '.repeat(10)}`;
-
-	return padding.slice(0, 10);
-}
 
 export const formatWithIcons = format((info: any, opts?: any) => {
 	const level: string = info.level.trim().toLowerCase();
@@ -31,8 +24,8 @@ export const formatWithIcons = format((info: any, opts?: any) => {
 	);
 
 	const message = `${symbol}${info.message}`;
-	// const padding = (info.padding && info.padding[info.level]) || '';
-	const padding = paddingForLevel();
+	const padding = (info.padding && info.padding[info.level]) || '';
+
 	if (stringifiedRest !== '{}') {
 		// _info = `${info.level}:${padding} ${symbol}  ${info.message} ${stringifiedRest}`;
 		info[MESSAGE] = `${info.level}:${padding} ${message} ${stringifiedRest}`;

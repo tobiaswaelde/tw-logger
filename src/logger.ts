@@ -48,8 +48,8 @@ if (NODE_ENV !== 'production') {
 					level: true,
 					message: true,
 				}),
-				// format.simple()
-				formatWithIcons()
+				format.simple()
+				// formatWithIcons()
 			),
 		})
 	);

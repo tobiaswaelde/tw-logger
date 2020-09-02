@@ -25,7 +25,6 @@ const log_levels_1 = require("./logger/log-levels");
 const format_with_timestamp_1 = require("./logger/format-with-timestamp");
 const console_colors_1 = require("./util/console-colors");
 Object.defineProperty(exports, "ConsoleColors", { enumerable: true, get: function () { return console_colors_1.ConsoleColors; } });
-const format_with_icon_1 = require("./logger/format-with-icon");
 const logger = winston_1.default.createLogger({
     level: 'silly',
     levels: log_levels_1.logLevels.levels,
@@ -55,9 +54,9 @@ if (NODE_ENV !== 'production') {
             colors: log_levels_1.logLevels.colors,
             level: true,
             message: true,
-        }), 
-        // format.simple()
-        format_with_icon_1.formatWithIcons()),
+        }), winston_1.format.simple()
+        // formatWithIcons()
+        ),
     }));
 }
 exports.default = logger;
