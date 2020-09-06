@@ -5,8 +5,8 @@ exports.logLevels = {
     levels: {
         error: 0,
         warn: 1,
-        info: 2,
-        success: 3,
+        success: 2,
+        info: 3,
         http: 4,
         db: 5,
         verbose: 6,
@@ -16,8 +16,8 @@ exports.logLevels = {
     colors: {
         error: 'red',
         warn: 'yellow',
-        info: 'green',
         success: 'green',
+        info: 'green',
         http: 'magenta',
         db: 'grey',
         verbose: 'blue',
