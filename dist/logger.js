@@ -14,7 +14,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -25,7 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.symbols = exports.ConsoleColors = void 0;
 const winston_1 = __importStar(require("winston"));
 const log_levels_1 = require("./logger/log-levels");
-const format_with_timestamp_1 = require("./logger/format-with-timestamp");
 const console_colors_1 = require("./util/console-colors");
 Object.defineProperty(exports, "ConsoleColors", { enumerable: true, get: function () { return console_colors_1.ConsoleColors; } });
 const log_symbols_1 = __importDefault(require("log-symbols"));
@@ -38,15 +37,15 @@ const logger = winston_1.default.createLogger({
 const NODE_ENV = String(process.env.NODE_ENV).trim() || 'dev';
 // save error logs only
 logger.add(new winston_1.default.transports.File({
-    format: winston_1.format.combine(winston_1.format.timestamp(), format_with_timestamp_1.formatWithTimestamp),
+    format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'error',
-    filename: 'logs/error.log',
+    filename: 'logs/error-log.json',
 }));
-// save all logs
+// save debug logs
 logger.add(new winston_1.default.transports.File({
-    format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), format_with_timestamp_1.formatWithTimestamp),
+    format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'debug',
-    filename: 'logs/debug.log',
+    filename: 'logs/debug-log.json',
 }));
 // log to console if not in production
 if (NODE_ENV !== 'production') {
