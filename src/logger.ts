@@ -6,7 +6,8 @@ import symbols from 'log-symbols';
 
 interface Logger extends winston.Logger {
 	db: winston.LeveledLogMethod;
-	success: winston.LeveledLogMethod;
+  success: winston.LeveledLogMethod;
+  [fn:string]:any;
 }
 
 const logger = winston.createLogger({
@@ -19,20 +20,20 @@ const NODE_ENV = String(process.env.NODE_ENV).trim() || 'dev';
 
 // save error logs only
 logger.add(
-	new winston.transports.File({
-		format: format.combine(format.timestamp(), formatWithTimestamp),
-		level: 'error',
-		filename: 'logs/error.log',
-	})
+  new winston.transports.File({
+    format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
+    level: 'error',
+    filename: 'logs/error-log.json',
+  })
 );
 
-// save all logs
+// save debug logs
 logger.add(
-	new winston.transports.File({
-		format: format.combine(format.uncolorize(), format.timestamp(), formatWithTimestamp),
-		level: 'debug',
-		filename: 'logs/debug.log',
-	})
+  new winston.transports.File({
+    format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
+    level: 'debug',
+    filename: 'logs/debug-log.json',
+  })
 );
 
 // log to console if not in production
