@@ -42,15 +42,17 @@ const NODE_ENV = String(process.env.NODE_ENV).trim() || 'dev';
 logger.add(new winston_1.default.transports.DailyRotateFile({
     format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'error',
-    filename: 'logs/error-log.json',
-    maxSize: '20m',
+    filename: 'logs/error-log-%DATE%.json',
+    datePattern: 'YYYY-MM-DD',
+    maxSize: '1g',
 }));
 // save debug logs
 logger.add(new winston_1.default.transports.DailyRotateFile({
     format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'debug',
-    filename: 'logs/debug-log.json',
-    maxSize: '20m',
+    filename: 'logs/debug-log-%DATE%.json',
+    datePattern: 'YYYY-MM-DD',
+    maxSize: '1g',
 }));
 // log to console if not in production
 if (NODE_ENV !== 'production') {

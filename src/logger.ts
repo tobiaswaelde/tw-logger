@@ -57,8 +57,9 @@ logger.add(
 	new winston.transports.DailyRotateFile({
 		format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
 		level: 'error',
-		filename: 'logs/error-log.json',
-		maxSize: '20m',
+		filename: 'logs/error-log-%DATE%.json',
+		datePattern: 'YYYY-MM-DD',
+		maxSize: '1g',
 	})
 );
 
@@ -67,8 +68,9 @@ logger.add(
 	new winston.transports.DailyRotateFile({
 		format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
 		level: 'debug',
-		filename: 'logs/debug-log.json',
-		maxSize: '20m',
+		filename: 'logs/debug-log-%DATE%.json',
+		datePattern: 'YYYY-MM-DD',
+		maxSize: '1g',
 	})
 );
 
