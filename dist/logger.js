@@ -29,23 +29,28 @@ const console_colors_1 = require("./util/console-colors");
 Object.defineProperty(exports, "ConsoleColors", { enumerable: true, get: function () { return console_colors_1.ConsoleColors; } });
 const log_symbols_1 = __importDefault(require("log-symbols"));
 exports.symbols = log_symbols_1.default;
+require("winston-daily-rotate-file");
 const logger = winston_1.default.createLogger({
     level: 'silly',
     levels: log_levels_1.logLevels.levels,
     transports: [],
 });
+logger.controller = (name, fn, ...meta) => logger.debug(`[controller] ${name}/${fn}`, ...meta);
+logger.middleware = (fn, ...meta) => logger.debug(`[middleware] ${fn}`, ...meta);
 const NODE_ENV = String(process.env.NODE_ENV).trim() || 'dev';
 // save error logs only
-logger.add(new winston_1.default.transports.File({
+logger.add(new winston_1.default.transports.DailyRotateFile({
     format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'error',
     filename: 'logs/error-log.json',
+    maxSize: '20m',
 }));
 // save debug logs
-logger.add(new winston_1.default.transports.File({
+logger.add(new winston_1.default.transports.DailyRotateFile({
     format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()),
     level: 'debug',
     filename: 'logs/debug-log.json',
+    maxSize: '20m',
 }));
 // log to console if not in production
 if (NODE_ENV !== 'production') {
