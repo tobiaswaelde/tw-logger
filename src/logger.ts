@@ -1,10 +1,11 @@
 import symbols from 'log-symbols';
-import winston, { format } from 'winston';
+import winston, { format, loggers } from 'winston';
 import 'winston-daily-rotate-file';
 import { logLevels } from './logger/log-levels';
 import { ConsoleColors } from './util/console-colors';
+import _ from 'lodash';
 
-interface Logger extends winston.Logger {
+interface CustomLogger extends winston.Logger {
 	db: winston.LeveledLogMethod;
 	success: winston.LeveledLogMethod;
 
@@ -37,7 +38,6 @@ interface Logger extends winston.Logger {
 
 	[fn: string]: any;
 }
-
 export interface LogOptions {
 	level?: string;
 	filename?: string;
@@ -51,20 +51,18 @@ export interface LoggerOptions {
 	errorLog: LogOptions;
 	customLogs?: LogOptions[];
 }
-const twLogger = (options?: Partial<LoggerOptions>) => {
-	/**
-	 * options or default options
-	 */
-	const config: LoggerOptions = {
-		level: options?.level || 'silly',
-		consoleOutput: options?.consoleOutput !== undefined ? options.consoleOutput : true,
-		debugLog: options?.debugLog || {
+
+class Logger {
+	private options: LoggerOptions = {
+		level: 'silly',
+		consoleOutput: true,
+		debugLog: {
 			level: 'debug',
 			filename: 'logs/debug-log-%DATE%.json',
 			datePattern: 'YYYY-MM-DD',
 			maxSize: '1g',
 		},
-		errorLog: options?.errorLog || {
+		errorLog: {
 			level: 'error',
 			filename: 'logs/error-log-%DATE%.json',
 			datePattern: 'YYYY-MM-DD',
@@ -75,61 +73,92 @@ const twLogger = (options?: Partial<LoggerOptions>) => {
 	/**
 	 * Internal logger
 	 */
-	const logger = winston.createLogger({
-		level: config.level,
+	private logger = winston.createLogger({
+		level: this.options.level,
 		levels: logLevels.levels,
 		transports: [],
-	}) as Logger;
+	}) as CustomLogger;
 
-	//#region custom log methods
-	logger.controller = (name: string, fn: string, ...meta: any) => {
-		return logger.debug(`[controller] ${name}/${fn}`, ...meta);
-	};
+	private init() {
+		if (this.options.debugLog !== undefined) {
+			// save debug logs
+			this.logger.add(
+				new winston.transports.DailyRotateFile({
+					format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
+					...this.options.debugLog,
+				})
+			);
+		}
 
-	logger.middleware = (fn: string, ...meta: any) => {
-		return logger.debug(`[middleware] ${fn}`, ...meta);
-	};
-	//#endregion
+		if (this.options.errorLog !== undefined) {
+			// save error logs only
+			this.logger.add(
+				new winston.transports.DailyRotateFile({
+					format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
+					...this.options.errorLog,
+				})
+			);
+		}
 
-	if (config.debugLog !== undefined) {
-		// save debug logs
-		logger.add(
-			new winston.transports.DailyRotateFile({
-				format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
-				...config.debugLog,
-			})
-		);
+		if (this.options.consoleOutput === true) {
+			// log to console
+			this.logger.add(
+				new winston.transports.Console({
+					format: format.combine(
+						format.cli({
+							levels: logLevels.levels,
+							colors: logLevels.colors,
+							level: true,
+							message: true,
+						}),
+						format.simple()
+					),
+				})
+			);
+		}
 	}
 
-	if (config.errorLog !== undefined) {
-		// save error logs only
-		logger.add(
-			new winston.transports.DailyRotateFile({
-				format: format.combine(format.uncolorize(), format.timestamp(), format.json()),
-				...config.errorLog,
-			})
-		);
+	constructor() {
+		//#region custom log methods
+		this.logger.controller = (name: string, fn: string, ...meta: any) => {
+			return this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
+		};
+
+		this.logger.middleware = (fn: string, ...meta: any) => {
+			return this.logger.debug(`[middleware] ${fn}`, ...meta);
+		};
+		//#endregion
+
+		this.init();
 	}
 
-	if (config.consoleOutput === true) {
-		// log to console
-		logger.add(
-			new winston.transports.Console({
-				format: format.combine(
-					format.cli({
-						levels: logLevels.levels,
-						colors: logLevels.colors,
-						level: true,
-						message: true,
-					}),
-					format.simple()
-				),
-			})
-		);
+	/**
+	 * Configure the logger
+	 * @param {Partial<LoggerOptions>} options The options to configure the logger
+	 */
+	public config(options: Partial<LoggerOptions>) {
+		this.options = _.extend(options, this.options);
+		this.init();
 	}
 
-	return logger;
-};
+	// log methods
+	public silly = this.logger.silly;
+	public debug = this.logger.debug;
+	public verbose = this.logger.verbose;
+	public db = this.logger.db;
+	public http = this.logger.http;
+	public info = this.logger.info;
+	public warn = this.logger.warn;
+	public error = this.logger.error;
+	public middleware = this.logger.middleware;
+	public controller = this.logger.controller;
 
-export default twLogger;
+	// profiling
+	public profile = this.logger.profile;
+	public startTimer = this.logger.startTimer;
+}
+
+const logger = new Logger();
+
+export default logger;
 export { ConsoleColors, symbols };

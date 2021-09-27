@@ -2,9 +2,9 @@
 
 ## Basic Usage
 
-##### logger.ts
+##### index.ts
 ```ts
-import twLogger, { LoggerOptions } from 'tw-logger';
+import logger from './logger';
 
 const options: LoggerOptions = {
   level: 'silly',
@@ -23,14 +23,7 @@ const options: LoggerOptions = {
   },
 };
 
-const logger = twLogger(options);
-
-export default logger;
-```
-
-##### index.ts
-```ts
-import logger from './logger';
+logger.config(options);
 
 logger.error('Error message');
 logger.warn('Warn message');
