@@ -1,12 +1,12 @@
-import winston from 'winston';
-import { ConsoleColors } from './util/console-colors';
 import symbols from 'log-symbols';
+import winston from 'winston';
 import 'winston-daily-rotate-file';
+import { ConsoleColors } from './util/console-colors';
 interface Logger extends winston.Logger {
     db: winston.LeveledLogMethod;
     success: winston.LeveledLogMethod;
     /** Log controller
-     *
+    //  *
      * @description
      * Logs a debug message in the format of the example
      *
@@ -32,6 +32,19 @@ interface Logger extends winston.Logger {
     middleware: (fn: string, ...meta: any) => winston.Logger;
     [fn: string]: any;
 }
-declare const logger: Logger;
-export default logger;
+export interface LogOptions {
+    level?: string;
+    filename?: string;
+    datePattern?: string;
+    maxSize?: string;
+}
+export interface LoggerOptions {
+    level: string;
+    consoleOutput: boolean;
+    debugLog: LogOptions;
+    errorLog: LogOptions;
+    customLogs?: LogOptions[];
+}
+declare const twLogger: (options?: Partial<LoggerOptions> | undefined) => Logger;
+export default twLogger;
 export { ConsoleColors, symbols };
