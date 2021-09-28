@@ -139,20 +139,24 @@ class Logger {
 	}
 
 	// log methods
-	public silly = this.logger.silly;
-	public debug = this.logger.debug;
-	public verbose = this.logger.verbose;
-	public db = this.logger.db;
-	public http = this.logger.http;
-	public info = this.logger.info;
-	public warn = this.logger.warn;
-	public error = this.logger.error;
-	public middleware = this.logger.middleware;
-	public controller = this.logger.controller;
+	public silly = (msg: string, ...meta: any) => {
+		this.logger.silly(msg, meta);
+	};
+	public debug = (msg: string, ...meta: any) => {
+		this.logger.debug(msg, meta);
+	};
+	// public verbose = this.logger.verbose;
+	// public db = this.logger.db;
+	// public http = this.logger.http;
+	// public info = this.logger.info;
+	// public warn = this.logger.warn;
+	// public error = this.logger.error;
+	// public middleware = this.logger.middleware;
+	// public controller = this.logger.controller;
 
 	// profiling
-	public profile = this.logger.profile;
-	public startTimer = this.logger.startTimer;
+	// public profile = this.logger.profile;
+	// public startTimer = this.logger.startTimer;
 }
 
 const logger = new Logger();

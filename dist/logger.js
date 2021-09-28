@@ -58,19 +58,12 @@ class Logger {
             transports: [],
         });
         // log methods
-        this.silly = this.logger.silly;
-        this.debug = this.logger.debug;
-        this.verbose = this.logger.verbose;
-        this.db = this.logger.db;
-        this.http = this.logger.http;
-        this.info = this.logger.info;
-        this.warn = this.logger.warn;
-        this.error = this.logger.error;
-        this.middleware = this.logger.middleware;
-        this.controller = this.logger.controller;
-        // profiling
-        this.profile = this.logger.profile;
-        this.startTimer = this.logger.startTimer;
+        this.silly = (msg, ...meta) => {
+            this.logger.silly(msg, meta);
+        };
+        this.debug = (msg, ...meta) => {
+            this.logger.debug(msg, meta);
+        };
         //#region custom log methods
         this.logger.controller = (name, fn, ...meta) => {
             return this.logger.debug(`[controller] ${name}/${fn}`, ...meta);

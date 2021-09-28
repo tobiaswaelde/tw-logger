@@ -1,5 +1,4 @@
 import symbols from 'log-symbols';
-import winston from 'winston';
 import 'winston-daily-rotate-file';
 import { ConsoleColors } from './util/console-colors';
 export interface LogOptions {
@@ -28,18 +27,8 @@ declare class Logger {
      * @param {Partial<LoggerOptions>} options The options to configure the logger
      */
     config(options: Partial<LoggerOptions>): void;
-    silly: winston.LeveledLogMethod;
-    debug: winston.LeveledLogMethod;
-    verbose: winston.LeveledLogMethod;
-    db: winston.LeveledLogMethod;
-    http: winston.LeveledLogMethod;
-    info: winston.LeveledLogMethod;
-    warn: winston.LeveledLogMethod;
-    error: winston.LeveledLogMethod;
-    middleware: (fn: string, ...meta: any) => winston.Logger;
-    controller: (name: string, fn: string, ...meta: any) => winston.Logger;
-    profile: (id: string | number) => winston.Logger;
-    startTimer: () => winston.Profiler;
+    silly: (msg: string, ...meta: any) => void;
+    debug: (msg: string, ...meta: any) => void;
 }
 declare const logger: Logger;
 export default logger;
