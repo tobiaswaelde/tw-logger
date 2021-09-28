@@ -90,6 +90,7 @@ class Logger {
         }));
     }
     init() {
+        this.logger.transports.forEach((x) => (x.silent = this.options.silent));
         if (this.options.debugLog !== false) {
             // save debug logs
             this.logger.add(new winston_1.default.transports.DailyRotateFile(Object.assign({ format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()) }, this.options.debugLog)));
@@ -98,7 +99,6 @@ class Logger {
             // save error logs only
             this.logger.add(new winston_1.default.transports.DailyRotateFile(Object.assign({ format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()) }, this.options.errorLog)));
         }
-        this.logger.transports.forEach((x) => (x.silent = this.options.silent));
     }
     /**
      * Configure the logger

@@ -80,6 +80,8 @@ class Logger {
 	}) as CustomLogger;
 
 	private init() {
+		this.logger.transports.forEach((x) => (x.silent = this.options.silent));
+
 		if (this.options.debugLog !== false) {
 			// save debug logs
 			this.logger.add(
@@ -98,8 +100,6 @@ class Logger {
 				})
 			);
 		}
-
-		this.logger.transports.forEach((x) => (x.silent = this.options.silent));
 	}
 
 	constructor() {
