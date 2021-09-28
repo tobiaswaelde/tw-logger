@@ -79,14 +79,13 @@ class Logger {
             return this.logger.debug(`[middleware] ${fn}`, ...meta);
         };
         //#endregion
-        this.init();
     }
     init() {
-        if (this.options.debugLog !== undefined) {
+        if (this.options.debugLog !== false) {
             // save debug logs
             this.logger.add(new winston_1.default.transports.DailyRotateFile(Object.assign({ format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()) }, this.options.debugLog)));
         }
-        if (this.options.errorLog !== undefined) {
+        if (this.options.errorLog !== false) {
             // save error logs only
             this.logger.add(new winston_1.default.transports.DailyRotateFile(Object.assign({ format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()) }, this.options.errorLog)));
         }
@@ -107,7 +106,7 @@ class Logger {
      * @param {Partial<LoggerOptions>} options The options to configure the logger
      */
     config(options) {
-        this.options = lodash_1.default.extend(options, this.options);
+        this.options = lodash_1.default.extend(this.options, options);
         this.init();
     }
 }

@@ -47,8 +47,8 @@ export interface LogOptions {
 export interface LoggerOptions {
 	level: string;
 	consoleOutput: boolean;
-	debugLog: LogOptions;
-	errorLog: LogOptions;
+	debugLog: LogOptions | false;
+	errorLog: LogOptions | false;
 	customLogs?: LogOptions[];
 }
 
@@ -80,7 +80,7 @@ class Logger {
 	}) as CustomLogger;
 
 	private init() {
-		if (this.options.debugLog !== undefined) {
+		if (this.options.debugLog !== false) {
 			// save debug logs
 			this.logger.add(
 				new winston.transports.DailyRotateFile({
@@ -89,7 +89,7 @@ class Logger {
 				})
 			);
 		}
-		if (this.options.errorLog !== undefined) {
+		if (this.options.errorLog !== false) {
 			// save error logs only
 			this.logger.add(
 				new winston.transports.DailyRotateFile({
@@ -98,6 +98,7 @@ class Logger {
 				})
 			);
 		}
+
 		if (this.options.consoleOutput === true) {
 			// log to console
 			this.logger.add(
@@ -126,8 +127,6 @@ class Logger {
 			return this.logger.debug(`[middleware] ${fn}`, ...meta);
 		};
 		//#endregion
-
-		this.init();
 	}
 
 	/**
@@ -135,7 +134,7 @@ class Logger {
 	 * @param {Partial<LoggerOptions>} options The options to configure the logger
 	 */
 	public config(options: Partial<LoggerOptions>) {
-		this.options = _.extend(options, this.options);
+		this.options = _.extend(this.options, options);
 		this.init();
 	}
 

@@ -11,8 +11,8 @@ export interface LogOptions {
 export interface LoggerOptions {
     level: string;
     consoleOutput: boolean;
-    debugLog: LogOptions;
-    errorLog: LogOptions;
+    debugLog: LogOptions | false;
+    errorLog: LogOptions | false;
     customLogs?: LogOptions[];
 }
 declare class Logger {
