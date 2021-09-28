@@ -52,6 +52,13 @@ export interface LoggerOptions {
 	customLogs?: LogOptions[];
 }
 
+interface LeveledLogMethod {
+	(message: string): winston.Logger;
+	(message: string, meta: any): winston.Logger;
+	(message: string, ...meta: any[]): winston.Logger;
+	(infoObject: object): winston.Logger;
+}
+
 class Logger {
 	private options: LoggerOptions = {
 		level: 'silly',
@@ -129,19 +136,20 @@ class Logger {
 	}
 
 	// log methods
-	public silly = (msg: string, ...meta: any) => this.logger.silly(msg, meta);
-	public debug = (msg: string, ...meta: any) => this.logger.debug(msg, meta);
-	public verbose = (msg: string, ...meta: any) => this.logger.verbose(msg, meta);
-	public db = (msg: string, ...meta: any) => this.logger.db(msg, meta);
-	public http = (msg: string, ...meta: any) => this.logger.http(msg, meta);
-	public info = (msg: string, ...meta: any) => this.logger.info(msg, meta);
-	public warn = (msg: string, ...meta: any) => this.logger.warn(msg, meta);
-	public error = (msg: string, ...meta: any) => this.logger.error(msg, meta);
-	public success = (msg: string, ...meta: any) => this.logger.success(msg, meta);
+	public silly: LeveledLogMethod = (props: any) => this.logger.silly(props);
+	public debug: LeveledLogMethod = (props: any) => this.logger.debug(props);
+	public verbose: LeveledLogMethod = (props: any) => this.logger.verbose(props);
+	public db: LeveledLogMethod = (props: any) => this.logger.db(props);
+	public http: LeveledLogMethod = (props: any) => this.logger.http(props);
+	public info: LeveledLogMethod = (props: any) => this.logger.info(props);
+	public warn: LeveledLogMethod = (props: any) => this.logger.warn(props);
+	public error: LeveledLogMethod = (props: any) => this.logger.error(props);
+	public success: LeveledLogMethod = (props: any) => this.logger.success(props);
 	public controller = (name: string, fn: string, ...meta: any) =>
 		this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
 	public middleware = (fn: string, ...meta: any) =>
 		this.logger.debug(`[middleware] ${fn}`, ...meta);
+
 	// profiling
 	public profile = (id: string | number) => this.logger.profile(id);
 	public startTimer = () => this.logger.startTimer;

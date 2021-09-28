@@ -15,6 +15,12 @@ export interface LoggerOptions {
     errorLog: LogOptions | false;
     customLogs?: LogOptions[];
 }
+interface LeveledLogMethod {
+    (message: string): winston.Logger;
+    (message: string, meta: any): winston.Logger;
+    (message: string, ...meta: any[]): winston.Logger;
+    (infoObject: object): winston.Logger;
+}
 declare class Logger {
     private options;
     /**
@@ -28,15 +34,15 @@ declare class Logger {
      * @param {Partial<LoggerOptions>} options The options to configure the logger
      */
     config(options: Partial<LoggerOptions>): void;
-    silly: (msg: string, ...meta: any) => winston.Logger;
-    debug: (msg: string, ...meta: any) => winston.Logger;
-    verbose: (msg: string, ...meta: any) => winston.Logger;
-    db: (msg: string, ...meta: any) => winston.Logger;
-    http: (msg: string, ...meta: any) => winston.Logger;
-    info: (msg: string, ...meta: any) => winston.Logger;
-    warn: (msg: string, ...meta: any) => winston.Logger;
-    error: (msg: string, ...meta: any) => winston.Logger;
-    success: (msg: string, ...meta: any) => winston.Logger;
+    silly: LeveledLogMethod;
+    debug: LeveledLogMethod;
+    verbose: LeveledLogMethod;
+    db: LeveledLogMethod;
+    http: LeveledLogMethod;
+    info: LeveledLogMethod;
+    warn: LeveledLogMethod;
+    error: LeveledLogMethod;
+    success: LeveledLogMethod;
     controller: (name: string, fn: string, ...meta: any) => winston.Logger;
     middleware: (fn: string, ...meta: any) => winston.Logger;
     profile: (id: string | number) => winston.Logger;

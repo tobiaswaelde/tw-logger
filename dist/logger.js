@@ -58,15 +58,15 @@ class Logger {
             transports: [],
         });
         // log methods
-        this.silly = (msg, ...meta) => this.logger.silly(msg, meta);
-        this.debug = (msg, ...meta) => this.logger.debug(msg, meta);
-        this.verbose = (msg, ...meta) => this.logger.verbose(msg, meta);
-        this.db = (msg, ...meta) => this.logger.db(msg, meta);
-        this.http = (msg, ...meta) => this.logger.http(msg, meta);
-        this.info = (msg, ...meta) => this.logger.info(msg, meta);
-        this.warn = (msg, ...meta) => this.logger.warn(msg, meta);
-        this.error = (msg, ...meta) => this.logger.error(msg, meta);
-        this.success = (msg, ...meta) => this.logger.success(msg, meta);
+        this.silly = (props) => this.logger.silly(props);
+        this.debug = (props) => this.logger.debug(props);
+        this.verbose = (props) => this.logger.verbose(props);
+        this.db = (props) => this.logger.db(props);
+        this.http = (props) => this.logger.http(props);
+        this.info = (props) => this.logger.info(props);
+        this.warn = (props) => this.logger.warn(props);
+        this.error = (props) => this.logger.error(props);
+        this.success = (props) => this.logger.success(props);
         this.controller = (name, fn, ...meta) => this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
         this.middleware = (fn, ...meta) => this.logger.debug(`[middleware] ${fn}`, ...meta);
         // profiling
