@@ -58,12 +58,19 @@ class Logger {
             transports: [],
         });
         // log methods
-        this.silly = (msg, ...meta) => {
-            this.logger.silly(msg, meta);
-        };
-        this.debug = (msg, ...meta) => {
-            this.logger.debug(msg, meta);
-        };
+        this.silly = (msg, ...meta) => this.logger.silly(msg, meta);
+        this.debug = (msg, ...meta) => this.logger.debug(msg, meta);
+        this.verbose = (msg, ...meta) => this.logger.verbose(msg, meta);
+        this.db = (msg, ...meta) => this.logger.db(msg, meta);
+        this.http = (msg, ...meta) => this.logger.http(msg, meta);
+        this.info = (msg, ...meta) => this.logger.info(msg, meta);
+        this.warn = (msg, ...meta) => this.logger.warn(msg, meta);
+        this.error = (msg, ...meta) => this.logger.error(msg, meta);
+        this.middleware = (msg, ...meta) => this.logger.middleware(msg, meta);
+        this.controller = (msg, ...meta) => this.logger.controller(msg, meta);
+        // profiling
+        this.profile = (id) => this.logger.profile(id);
+        this.startTimer = () => this.logger.startTimer;
         //#region custom log methods
         this.logger.controller = (name, fn, ...meta) => {
             return this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
@@ -72,6 +79,10 @@ class Logger {
             return this.logger.debug(`[middleware] ${fn}`, ...meta);
         };
         //#endregion
+        this.logger.add(new winston_1.default.transports.Console({
+            format: winston_1.format.simple(),
+            silent: true,
+        }));
     }
     init() {
         if (this.options.debugLog !== false) {

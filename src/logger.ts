@@ -127,6 +127,13 @@ class Logger {
 			return this.logger.debug(`[middleware] ${fn}`, ...meta);
 		};
 		//#endregion
+
+		this.logger.add(
+			new winston.transports.Console({
+				format: format.simple(),
+				silent: true,
+			})
+		);
 	}
 
 	/**
@@ -139,24 +146,20 @@ class Logger {
 	}
 
 	// log methods
-	public silly = (msg: string, ...meta: any) => {
-		this.logger.silly(msg, meta);
-	};
-	public debug = (msg: string, ...meta: any) => {
-		this.logger.debug(msg, meta);
-	};
-	// public verbose = this.logger.verbose;
-	// public db = this.logger.db;
-	// public http = this.logger.http;
-	// public info = this.logger.info;
-	// public warn = this.logger.warn;
-	// public error = this.logger.error;
-	// public middleware = this.logger.middleware;
-	// public controller = this.logger.controller;
+	public silly = (msg: string, ...meta: any) => this.logger.silly(msg, meta);
+	public debug = (msg: string, ...meta: any) => this.logger.debug(msg, meta);
+	public verbose = (msg: string, ...meta: any) => this.logger.verbose(msg, meta);
+	public db = (msg: string, ...meta: any) => this.logger.db(msg, meta);
+	public http = (msg: string, ...meta: any) => this.logger.http(msg, meta);
+	public info = (msg: string, ...meta: any) => this.logger.info(msg, meta);
+	public warn = (msg: string, ...meta: any) => this.logger.warn(msg, meta);
+	public error = (msg: string, ...meta: any) => this.logger.error(msg, meta);
+	public middleware = (msg: string, ...meta: any) => this.logger.middleware(msg, meta);
+	public controller = (msg: string, ...meta: any) => this.logger.controller(msg, meta);
 
 	// profiling
-	// public profile = this.logger.profile;
-	// public startTimer = this.logger.startTimer;
+	public profile = (id: string | number) => this.logger.profile(id);
+	public startTimer = () => this.logger.startTimer;
 }
 
 const logger = new Logger();
