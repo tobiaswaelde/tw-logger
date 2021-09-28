@@ -1,5 +1,5 @@
 import symbols from 'log-symbols';
-import winston, { format, loggers } from 'winston';
+import winston, { format } from 'winston';
 import 'winston-daily-rotate-file';
 import { logLevels } from './logger/log-levels';
 import { ConsoleColors } from './util/console-colors';
@@ -89,7 +89,6 @@ class Logger {
 				})
 			);
 		}
-
 		if (this.options.errorLog !== undefined) {
 			// save error logs only
 			this.logger.add(
@@ -99,7 +98,6 @@ class Logger {
 				})
 			);
 		}
-
 		if (this.options.consoleOutput === true) {
 			// log to console
 			this.logger.add(

@@ -38,7 +38,7 @@ declare class Logger {
     error: winston.LeveledLogMethod;
     middleware: (fn: string, ...meta: any) => winston.Logger;
     controller: (name: string, fn: string, ...meta: any) => winston.Logger;
-    profile: (id: string | number, meta?: winston.LogEntry | undefined) => winston.Logger;
+    profile: (id: string | number) => winston.Logger;
     startTimer: () => winston.Profiler;
 }
 declare const logger: Logger;
