@@ -8,7 +8,7 @@ import logger from './logger';
 
 const options: LoggerOptions = {
   level: 'silly',
-  silen: process.env.NODE_ENV !== 'development',
+  silent: process.env.NODE_ENV !== 'development',
   debugLog: {
     level: 'debug',
     filename: 'logs/debug-log-%DATE%.json',
