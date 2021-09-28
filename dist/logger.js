@@ -66,19 +66,12 @@ class Logger {
         this.info = (msg, ...meta) => this.logger.info(msg, meta);
         this.warn = (msg, ...meta) => this.logger.warn(msg, meta);
         this.error = (msg, ...meta) => this.logger.error(msg, meta);
-        this.middleware = (msg, ...meta) => this.logger.middleware(msg, meta);
-        this.controller = (msg, ...meta) => this.logger.controller(msg, meta);
+        this.success = (msg, ...meta) => this.logger.success(msg, meta);
+        this.controller = (name, fn, ...meta) => this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
+        this.middleware = (fn, ...meta) => this.logger.debug(`[middleware] ${fn}`, ...meta);
         // profiling
         this.profile = (id) => this.logger.profile(id);
         this.startTimer = () => this.logger.startTimer;
-        //#region custom log methods
-        this.logger.controller = (name, fn, ...meta) => {
-            return this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
-        };
-        this.logger.middleware = (fn, ...meta) => {
-            return this.logger.debug(`[middleware] ${fn}`, ...meta);
-        };
-        //#endregion
         // log to console
         this.logger.add(new winston_1.default.transports.Console({
             format: winston_1.format.combine(winston_1.format.cli({

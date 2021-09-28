@@ -103,16 +103,6 @@ class Logger {
 	}
 
 	constructor() {
-		//#region custom log methods
-		this.logger.controller = (name: string, fn: string, ...meta: any) => {
-			return this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
-		};
-
-		this.logger.middleware = (fn: string, ...meta: any) => {
-			return this.logger.debug(`[middleware] ${fn}`, ...meta);
-		};
-		//#endregion
-
 		// log to console
 		this.logger.add(
 			new winston.transports.Console({
@@ -147,9 +137,11 @@ class Logger {
 	public info = (msg: string, ...meta: any) => this.logger.info(msg, meta);
 	public warn = (msg: string, ...meta: any) => this.logger.warn(msg, meta);
 	public error = (msg: string, ...meta: any) => this.logger.error(msg, meta);
-	public middleware = (msg: string, ...meta: any) => this.logger.middleware(msg, meta);
-	public controller = (msg: string, ...meta: any) => this.logger.controller(msg, meta);
-
+	public success = (msg: string, ...meta: any) => this.logger.success(msg, meta);
+	public controller = (name: string, fn: string, ...meta: any) =>
+		this.logger.debug(`[controller] ${name}/${fn}`, ...meta);
+	public middleware = (fn: string, ...meta: any) =>
+		this.logger.debug(`[middleware] ${fn}`, ...meta);
 	// profiling
 	public profile = (id: string | number) => this.logger.profile(id);
 	public startTimer = () => this.logger.startTimer;

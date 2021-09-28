@@ -36,8 +36,9 @@ declare class Logger {
     info: (msg: string, ...meta: any) => winston.Logger;
     warn: (msg: string, ...meta: any) => winston.Logger;
     error: (msg: string, ...meta: any) => winston.Logger;
-    middleware: (msg: string, ...meta: any) => winston.Logger;
-    controller: (msg: string, ...meta: any) => winston.Logger;
+    success: (msg: string, ...meta: any) => winston.Logger;
+    controller: (name: string, fn: string, ...meta: any) => winston.Logger;
+    middleware: (fn: string, ...meta: any) => winston.Logger;
     profile: (id: string | number) => winston.Logger;
     startTimer: () => () => winston.Profiler;
 }
