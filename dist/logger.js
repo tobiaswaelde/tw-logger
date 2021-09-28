@@ -35,7 +35,7 @@ class Logger {
     constructor() {
         this.options = {
             level: 'silly',
-            consoleOutput: true,
+            silent: false,
             debugLog: {
                 level: 'debug',
                 filename: 'logs/debug-log-%DATE%.json',
@@ -79,9 +79,14 @@ class Logger {
             return this.logger.debug(`[middleware] ${fn}`, ...meta);
         };
         //#endregion
+        // log to console
         this.logger.add(new winston_1.default.transports.Console({
-            format: winston_1.format.simple(),
-            silent: true,
+            format: winston_1.format.combine(winston_1.format.cli({
+                levels: log_levels_1.logLevels.levels,
+                colors: log_levels_1.logLevels.colors,
+                level: true,
+                message: true,
+            }), winston_1.format.simple()),
         }));
     }
     init() {
@@ -93,17 +98,7 @@ class Logger {
             // save error logs only
             this.logger.add(new winston_1.default.transports.DailyRotateFile(Object.assign({ format: winston_1.format.combine(winston_1.format.uncolorize(), winston_1.format.timestamp(), winston_1.format.json()) }, this.options.errorLog)));
         }
-        if (this.options.consoleOutput === true) {
-            // log to console
-            this.logger.add(new winston_1.default.transports.Console({
-                format: winston_1.format.combine(winston_1.format.cli({
-                    levels: log_levels_1.logLevels.levels,
-                    colors: log_levels_1.logLevels.colors,
-                    level: true,
-                    message: true,
-                }), winston_1.format.simple()),
-            }));
-        }
+        this.logger.transports.forEach((x) => (x.silent = this.options.silent));
     }
     /**
      * Configure the logger

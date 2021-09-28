@@ -46,7 +46,7 @@ export interface LogOptions {
 }
 export interface LoggerOptions {
 	level: string;
-	consoleOutput: boolean;
+	silent: boolean;
 	debugLog: LogOptions | false;
 	errorLog: LogOptions | false;
 	customLogs?: LogOptions[];
@@ -55,7 +55,7 @@ export interface LoggerOptions {
 class Logger {
 	private options: LoggerOptions = {
 		level: 'silly',
-		consoleOutput: true,
+		silent: false,
 		debugLog: {
 			level: 'debug',
 			filename: 'logs/debug-log-%DATE%.json',
@@ -99,22 +99,7 @@ class Logger {
 			);
 		}
 
-		if (this.options.consoleOutput === true) {
-			// log to console
-			this.logger.add(
-				new winston.transports.Console({
-					format: format.combine(
-						format.cli({
-							levels: logLevels.levels,
-							colors: logLevels.colors,
-							level: true,
-							message: true,
-						}),
-						format.simple()
-					),
-				})
-			);
-		}
+		this.logger.transports.forEach((x) => (x.silent = this.options.silent));
 	}
 
 	constructor() {
@@ -128,10 +113,18 @@ class Logger {
 		};
 		//#endregion
 
+		// log to console
 		this.logger.add(
 			new winston.transports.Console({
-				format: format.simple(),
-				silent: true,
+				format: format.combine(
+					format.cli({
+						levels: logLevels.levels,
+						colors: logLevels.colors,
+						level: true,
+						message: true,
+					}),
+					format.simple()
+				),
 			})
 		);
 	}

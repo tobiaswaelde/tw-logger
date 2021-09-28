@@ -10,7 +10,7 @@ export interface LogOptions {
 }
 export interface LoggerOptions {
     level: string;
-    consoleOutput: boolean;
+    silent: boolean;
     debugLog: LogOptions | false;
     errorLog: LogOptions | false;
     customLogs?: LogOptions[];
